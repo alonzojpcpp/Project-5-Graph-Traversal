@@ -1,4 +1,3 @@
-import LinkedQueue.Node;
 
 /**
    A class that implements a queue of objects by using
