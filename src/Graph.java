@@ -2,8 +2,10 @@ public class Graph<E>
 {
     private boolean[][] edges; // edges[i][j] is true if there is a vertex from i to j
     private E[] labels; // labels[i] contains the label for vertex i  
-    private int[] resultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // resultArray[i] holds the result of breadth-first traversal
-    private int resultArrayCounter = 0;
+    private int[] BFTResultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // BFTResultArray[i] holds the result of breadth-first traversal
+    private int BFTResultArrayCounter = 0;
+    private int[] DFTResultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // DFTResultArray[i] holds the result of depth-first traversal
+    private int DFTResultArrayCounter = 0;
 
     @SuppressWarnings("unchecked")
 	public Graph(int n) {
@@ -61,13 +63,26 @@ public class Graph<E>
     
     // ---------- Project 5 Code Starts Here ---------
     
-    // Returns true/false depending on if the resultArray contains a certain element or not
-    public boolean contains(int node) {
+    // Returns true/false depending on if the BFTResultArray contains a certain element or not
+    public boolean BFTContains(int node) {
     	boolean contain = false;
     	
     	// Iterates through the entire array and checks if the parameter anywhere in the array
-    	for (int i = 0; i < resultArray.length; i++) {
-    		if(node == resultArray[i]) {
+    	for (int i = 0; i < BFTResultArray.length; i++) {
+    		if(node == BFTResultArray[i]) {
+    			contain = true;
+    		}
+    	}
+		return contain;
+    }
+    
+    // Returns true/false depending on if the DFTResultArray contains a certain element or not
+    public boolean DFTContains(int node) {
+    	boolean contain = false;
+    	
+    	// Iterates through the entire array and checks if the parameter anywhere in the array
+    	for (int i = 0; i < DFTResultArray.length; i++) {
+    		if(node == DFTResultArray[i]) {
     			contain = true;
     		}
     	}
@@ -78,11 +93,11 @@ public class Graph<E>
     public void breadthFirstTraversal(int node) throws EmptyQueueException {
     	
     	int tempElement = 0;
+    	int tempElement2 = 0;
     	int[] tempArray;
-    	int tempElementArray = 0;
     	
 		LinkedQueue<Integer> vertexQueue = new LinkedQueue<>();
-		
+		System.out.print("BFT From Code:  ");
 		// Enqueues the first inputed node
 		vertexQueue.enqueue(node);
 		
@@ -94,27 +109,28 @@ public class Graph<E>
 			tempArray = this.neighbors(tempElement);
 			
 			// If not in resultArray, add it
-			if(!this.contains(tempElement)) {
-				resultArray[resultArrayCounter] = tempElement;
-				resultArrayCounter++;
+			if(!this.BFTContains(tempElement)) {
+				BFTResultArray[BFTResultArrayCounter] = tempElement;
+				BFTResultArrayCounter++;
 			}
 			
 			// Adds the next element to the queue if it has not been added to resultArray
 			for(int j = 0; j < tempArray.length; j++) {
-				tempElementArray = tempArray[j];
+				tempElement2 = tempArray[j];
 				
-				if(!this.contains(tempElementArray)) {
+				if(!this.BFTContains(tempElement2)) {
 					vertexQueue.enqueue(tempArray[j]);
 				}
         	}		
 		}
 		
-		// Prints out resultArray
-		for(int i = 0; i < resultArray.length; i++) {
-			if(!(resultArray[i] == -1)) {
-				System.out.print(this.getLabel(resultArray[i]) + " ");
+		// Prints out BFTResultArray
+		for(int i = 0; i < BFTResultArray.length; i++) {
+			if(!(BFTResultArray[i] == -1)) {
+				System.out.print(this.getLabel(BFTResultArray[i]) + " ");
 			}
 		}
+		System.out.println("\n");
 		
 		/*
 		 * int tempElement = 0; int tempNode = node; int[] tempArray; int
@@ -143,5 +159,53 @@ public class Graph<E>
 		 * // Prints out the result array for(int i = 0; i < resultArray.length - 1;
 		 * i++) { System.out.print(this.getLabel(resultArray[i]) + " "); }
 		 */
+    }
+    
+    // Prints the depth-first traversal of the given graph starting at node
+    public void depthFirstTraversal(int node) throws EmptyQueueException {
+    	
+    	int tempElement = 0;
+    	int[] tempArray;
+
+		ResizableArrayStack<Integer> resizableArrayStack = new ResizableArrayStack<>();
+
+		System.out.print("DFT From Code:  ");
+		
+		
+		// Pushes the inputed node into the stack
+		resizableArrayStack.push(node);
+		
+		// Continues to iterate through the stack until it's empty
+		while(!resizableArrayStack.isEmpty()) {
+			
+			// Sets tempElement to the top of the stack and tempArray to the neighbors
+			tempElement = resizableArrayStack.peek();
+			tempArray = this.neighbors(tempElement);
+			
+			// If the result array does not contain the element, add it
+			if(!this.DFTContains(tempElement)) {
+				DFTResultArray[DFTResultArrayCounter] = tempElement;
+				DFTResultArrayCounter++;
+			}
+			
+			// Go through all neighbors, if it is not in the array, push into the stack and break, if it is, pop it out of the stack
+			for(int j = 0; j < tempArray.length; j++) {
+				if(!this.DFTContains(tempArray[j])) {
+					resizableArrayStack.push(tempArray[j]);
+					break;
+				}
+				else {
+					resizableArrayStack.pop();
+				}
+        	}
+		}
+		
+		// Prints out DFTResultArray
+		for(int i = 0; i < DFTResultArray.length; i++) {
+			if(!(DFTResultArray[i] == -1)) {
+				System.out.print(this.getLabel(DFTResultArray[i]) + " ");
+			}
+		}
+		System.out.println("\n");
     }
 }
