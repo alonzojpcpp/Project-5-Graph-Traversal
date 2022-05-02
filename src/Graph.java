@@ -199,7 +199,7 @@ public class Graph<E>
 				}
         	}
 		}
-		
+		  
 		// Prints out DFTResultArray
 		for(int i = 0; i < DFTResultArray.length; i++) {
 			if(!(DFTResultArray[i] == -1)) {
