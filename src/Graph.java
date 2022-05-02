@@ -72,4 +72,44 @@ public class Graph<E>
     	}
 		return contain;
     }
+    
+    // Prints the breadth-first traversal of the given graph starting at node
+    public void breadthFirstTraversal(int node) throws EmptyQueueException {
+    	int tempElement = 0;
+    	int tempNode = node;
+    	int[] tempArray;
+    	int resultArrayCounter = 0;
+    	
+		LinkedQueue<Integer> linkedQueue = new LinkedQueue<>();
+		
+		System.out.print(this.getLabel(node) + " ");
+
+		// Iterates through every node from 0 - 8 numerically
+		for(int i = 0; i < this.size(); i++) {
+    		tempElement = (node + i) % this.size();
+    		tempArray = this.neighbors(tempElement);
+    		
+    		// Enqueues all elements from the temporary array that was holding the neighbors
+    		for(int j = 0; j < tempArray.length; j++) {
+    			linkedQueue.enqueue(tempArray[j]);
+        	}
+    	}
+		
+		// Empties the queue and saves the result into resultArray
+		while(!linkedQueue.isEmpty()) {
+			tempElement = linkedQueue.dequeue();
+			tempNode = tempElement;
+			
+			// If the element in the queue is not in the resultArray, add it
+			if(!this.contains(tempElement)) {
+				resultArray[resultArrayCounter] = tempElement;
+				resultArrayCounter++;
+			}
+		}
+		
+		// Prints out the result array
+		for(int i = 0; i < resultArray.length - 1; i++) {
+			System.out.print(this.getLabel(resultArray[i]) + " ");
+		}
+    }
 }
