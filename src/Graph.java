@@ -2,7 +2,8 @@ public class Graph<E>
 {
     private boolean[][] edges; // edges[i][j] is true if there is a vertex from i to j
     private E[] labels; // labels[i] contains the label for vertex i  
-    private int[] resultArray = new int[9]; // resultArray[i] holds the result of breadth-first traversal
+    private int[] resultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // resultArray[i] holds the result of breadth-first traversal
+    private int resultArrayCounter = 0;
 
     @SuppressWarnings("unchecked")
 	public Graph(int n) {
@@ -75,41 +76,72 @@ public class Graph<E>
     
     // Prints the breadth-first traversal of the given graph starting at node
     public void breadthFirstTraversal(int node) throws EmptyQueueException {
-    	int tempElement = 0;
-    	int tempNode = node;
-    	int[] tempArray;
-    	int resultArrayCounter = 0;
     	
-		LinkedQueue<Integer> linkedQueue = new LinkedQueue<>();
+    	int tempElement = 0;
+    	int[] tempArray;
+    	int tempElementArray = 0;
+    	
+		LinkedQueue<Integer> vertexQueue = new LinkedQueue<>();
 		
-		System.out.print(this.getLabel(node) + " ");
-
-		// Iterates through every node from 0 - 8 numerically
-		for(int i = 0; i < this.size(); i++) {
-    		tempElement = (node + i) % this.size();
-    		tempArray = this.neighbors(tempElement);
-    		
-    		// Enqueues all elements from the temporary array that was holding the neighbors
-    		for(int j = 0; j < tempArray.length; j++) {
-    			linkedQueue.enqueue(tempArray[j]);
-        	}
-    	}
+		// Enqueues the first inputed node
+		vertexQueue.enqueue(node);
 		
-		// Empties the queue and saves the result into resultArray
-		while(!linkedQueue.isEmpty()) {
-			tempElement = linkedQueue.dequeue();
-			tempNode = tempElement;
+		// Goes through every element in the graph and adds it to the result if it's not there
+		while(!vertexQueue.isEmpty()) {
 			
-			// If the element in the queue is not in the resultArray, add it
+			// Gets top vertex and finds it's neighbors
+			tempElement = vertexQueue.dequeue();
+			tempArray = this.neighbors(tempElement);
+			
+			// If not in resultArray, add it
 			if(!this.contains(tempElement)) {
 				resultArray[resultArrayCounter] = tempElement;
 				resultArrayCounter++;
 			}
+			
+			// Adds the next element to the queue if it has not been added to resultArray
+			for(int j = 0; j < tempArray.length; j++) {
+				tempElementArray = tempArray[j];
+				
+				if(!this.contains(tempElementArray)) {
+					vertexQueue.enqueue(tempArray[j]);
+				}
+        	}		
 		}
 		
-		// Prints out the result array
-		for(int i = 0; i < resultArray.length - 1; i++) {
-			System.out.print(this.getLabel(resultArray[i]) + " ");
+		// Prints out resultArray
+		for(int i = 0; i < resultArray.length; i++) {
+			if(!(resultArray[i] == -1)) {
+				System.out.print(this.getLabel(resultArray[i]) + " ");
+			}
 		}
+		
+		/*
+		 * int tempElement = 0; int tempNode = node; int[] tempArray; int
+		 * resultArrayCounter = 0;
+		 * 
+		 * LinkedQueue<Integer> linkedQueue = new LinkedQueue<>();
+		 * 
+		 * System.out.print(this.getLabel(node) + " ");
+		 * 
+		 * // Iterates through every node from 0 - 8 numerically for(int i = 0; i <
+		 * this.size(); i++) { tempElement = (node + i) % this.size(); tempArray =
+		 * this.neighbors(tempElement);
+		 * 
+		 * // Enqueues all elements from the temporary array that was holding the
+		 * neighbors for(int j = 0; j < tempArray.length; j++) {
+		 * linkedQueue.enqueue(tempArray[j]); } }
+		 * 
+		 * // Empties the queue and saves the result into resultArray
+		 * while(!linkedQueue.isEmpty()) { tempElement = linkedQueue.dequeue(); tempNode
+		 * = tempElement;
+		 * 
+		 * // If the element in the queue is not in the resultArray, add it
+		 * if(!this.contains(tempElement)) { resultArray[resultArrayCounter] =
+		 * tempElement; resultArrayCounter++; } }
+		 * 
+		 * // Prints out the result array for(int i = 0; i < resultArray.length - 1;
+		 * i++) { System.out.print(this.getLabel(resultArray[i]) + " "); }
+		 */
     }
 }
