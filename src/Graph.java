@@ -90,14 +90,14 @@ public class Graph<E>
     }
     
     // Prints the breadth-first traversal of the given graph starting at node
-    public void breadthFirstTraversal(int node) throws EmptyQueueException {
+    public String breadthFirstTraversal(int node) throws EmptyQueueException {
     	
     	int tempElement = 0;
     	int tempElement2 = 0;
     	int[] tempArray;
+    	String resultString = "";
     	
 		LinkedQueue<Integer> vertexQueue = new LinkedQueue<>();
-		System.out.print("BFT From Code:  ");
 		// Enqueues the first inputed node
 		vertexQueue.enqueue(node);
 		
@@ -127,11 +127,10 @@ public class Graph<E>
 		// Prints out BFTResultArray
 		for(int i = 0; i < BFTResultArray.length; i++) {
 			if(!(BFTResultArray[i] == -1)) {
-				System.out.print(this.getLabel(BFTResultArray[i]) + " ");
+				resultString += this.getLabel(BFTResultArray[i]) + " ";
 			}
 		}
-		System.out.println("\n");
-		
+		return resultString;
 		/*
 		 * int tempElement = 0; int tempNode = node; int[] tempArray; int
 		 * resultArrayCounter = 0;
@@ -162,15 +161,13 @@ public class Graph<E>
     }
     
     // Prints the depth-first traversal of the given graph starting at node
-    public void depthFirstTraversal(int node) throws EmptyQueueException {
+    public String depthFirstTraversal(int node) throws EmptyQueueException {
     	
     	int tempElement = 0;
     	int[] tempArray;
+    	String resultString = "";
 
-		ResizableArrayStack<Integer> resizableArrayStack = new ResizableArrayStack<>();
-
-		System.out.print("DFT From Code:  ");
-		
+		ResizableArrayStack<Integer> resizableArrayStack = new ResizableArrayStack<>();		
 		
 		// Pushes the inputed node into the stack
 		resizableArrayStack.push(node);
@@ -203,9 +200,9 @@ public class Graph<E>
 		// Prints out DFTResultArray
 		for(int i = 0; i < DFTResultArray.length; i++) {
 			if(!(DFTResultArray[i] == -1)) {
-				System.out.print(this.getLabel(DFTResultArray[i]) + " ");
+				resultString += this.getLabel(DFTResultArray[i]) + " ";
 			}
 		}
-		System.out.println("\n");
+		return resultString;
     }
 }
