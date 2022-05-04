@@ -1,10 +1,11 @@
+
 public class Graph<E>
 {
     private boolean[][] edges; // edges[i][j] is true if there is a vertex from i to j
     private E[] labels; // labels[i] contains the label for vertex i  
-    private int[] BFTResultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // BFTResultArray[i] holds the result of breadth-first traversal
+    private int[] BFTResultArray; // BFTResultArray[i] holds the result of breadth-first traversal
     private int BFTResultArrayCounter = 0;
-    private int[] DFTResultArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1}; // DFTResultArray[i] holds the result of depth-first traversal
+    private int[] DFTResultArray; // DFTResultArray[i] holds the result of depth-first traversal
     private int DFTResultArrayCounter = 0;
 
     @SuppressWarnings("unchecked")
@@ -97,6 +98,14 @@ public class Graph<E>
     	int[] tempArray;
     	String resultString = "";
     	
+    	// Initializes BFTResultArray with the number of nodes in the graph
+    	BFTResultArray = new int[labels.length]; 
+
+    	// Initializes all elements in BFTResultArray as -1
+    	for(int i = 0; i < BFTResultArray.length; i++ ) {
+    		BFTResultArray[i] = -1;
+    	}
+    	
 		LinkedQueue<Integer> vertexQueue = new LinkedQueue<>();
 		// Enqueues the first inputed node
 		vertexQueue.enqueue(node);
@@ -131,7 +140,7 @@ public class Graph<E>
 			}
 		}
 		return resultString;
-		/*
+		/* - - - - - Previous code that only works with node 0 - - - - -
 		 * int tempElement = 0; int tempNode = node; int[] tempArray; int
 		 * resultArrayCounter = 0;
 		 * 
@@ -167,6 +176,14 @@ public class Graph<E>
     	int[] tempArray;
     	String resultString = "";
 
+    	// Initializes DFTResultArray with the number of nodes in the graph
+    	DFTResultArray = new int[labels.length]; 
+
+    	// Initializes all elements in BFTResultArray as -1
+    	for(int i = 0; i < DFTResultArray.length; i++ ) {
+    		DFTResultArray[i] = -1;
+    	}
+    	
 		ResizableArrayStack<Integer> resizableArrayStack = new ResizableArrayStack<>();		
 		
 		// Pushes the inputed node into the stack
@@ -174,11 +191,16 @@ public class Graph<E>
 		
 		// Continues to iterate through the stack until it's empty
 		while(!resizableArrayStack.isEmpty()) {
-			
+
 			// Sets tempElement to the top of the stack and tempArray to the neighbors
 			tempElement = resizableArrayStack.peek();
-			tempArray = this.neighbors(tempElement);
+			tempArray = this.neighbors(tempElement);	
 			
+			// If tempArray has nothing in it, pop the top of the stack
+			if (tempArray.length == 0) {
+				resizableArrayStack.pop();
+			}
+
 			// If the result array does not contain the element, add it
 			if(!this.DFTContains(tempElement)) {
 				DFTResultArray[DFTResultArrayCounter] = tempElement;
@@ -191,10 +213,11 @@ public class Graph<E>
 					resizableArrayStack.push(tempArray[j]);
 					break;
 				}
-				else {
+				else if (j == tempArray.length - 1){
 					resizableArrayStack.pop();
 				}
         	}
+			
 		}
 		  
 		// Prints out DFTResultArray
@@ -205,4 +228,4 @@ public class Graph<E>
 		}
 		return resultString;
     }
-}
+} 

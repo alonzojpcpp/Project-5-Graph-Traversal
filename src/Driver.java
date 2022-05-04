@@ -30,10 +30,10 @@ public class Driver {
 		task1Graph.setLabel(8, 'I');
 		
 		System.out.println("BFT From Graph: A B D E G F H C I");
-		task1Graph.breadthFirstTraversal(0);
+		System.out.println(task1Graph.breadthFirstTraversal(0));
 		
 		System.out.println("DFT From Graph: A B E F C H I D G");
-		task1Graph.depthFirstTraversal(0);
+		System.out.println(task1Graph.depthFirstTraversal(0));
 	}
 	
 	
