@@ -64,7 +64,9 @@ public class Graph<E>
     
     // ---------- Project 5 Code Starts Here ---------
     
-    // Returns true/false depending on if the BFTResultArray contains a certain element or not
+    /** Returns true/false depending on if the BFTResultArray contains a certain element or not
+    @return  contain - a boolean that is either true/false based on if the element is in the array or not
+    @param  node - the element that is checked against BFTResultArray to see if it's in there */
     public boolean BFTContains(int node) {
     	boolean contain = false;
     	
@@ -77,7 +79,9 @@ public class Graph<E>
 		return contain;
     }
     
-    // Returns true/false depending on if the DFTResultArray contains a certain element or not
+    /** Returns true/false depending on if the DFTResultArray contains a certain element or not
+    @return  contain - a boolean that is either true/false based on if the element is in the array or not
+    @param  node - the element that is checked against DFTResultArray to see if it's in there */
     public boolean DFTContains(int node) {
     	boolean contain = false;
     	
@@ -89,8 +93,10 @@ public class Graph<E>
     	}
 		return contain;
     }
-    
-    // Prints the breadth-first traversal of the given graph starting at node
+     
+    /** Prints the breadth-first traversal of the given graph starting at node
+    @return  resultString - a string that contains the elements from breadth-first traversal
+    @param  node - the node to start breadth-first traversal at */
     public String breadthFirstTraversal(int node) throws EmptyQueueException {
     	
     	int tempElement = 0;
@@ -169,7 +175,9 @@ public class Graph<E>
 		 */
     }
     
-    // Prints the depth-first traversal of the given graph starting at node
+    /** Prints the depth-first traversal of the given graph starting at node
+    @return  resultString - a string that contains the elements from depth-first traversal
+    @param  node - the node to start depth-first traversal at */
     public String depthFirstTraversal(int node) throws EmptyQueueException {
     	
     	int tempElement = 0;
