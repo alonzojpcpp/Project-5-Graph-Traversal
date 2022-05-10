@@ -4,10 +4,10 @@ Jacob Alonzo, Samuel Araya, Manan Patel
 [2] Contributions
 Jacob Alonzo - Responsible for the entire "master" branch
 Samuel Araya - Responsible for the entire "samuelArayaBranch" branch
-Manan Patel - Responsible for the entire "mananPatel" branch
+Manan Patel - Responsible for the entire "mananPatelBranch" branch
 
 [3] Screencast Link
-
+https://youtu.be/xCFqI_CAQWQ
 
 [4] Extra Features
  - Used Java interface and generic data types (10 pts)
